@@ -19,11 +19,6 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Git config
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-
     - name: Get version
       id: get-version
       run: |
