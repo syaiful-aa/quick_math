@@ -10,6 +10,11 @@ jobs:
     if: github.event.pull_request.merged && github.base_ref == 'main'
     runs-on: ubuntu-latest
     steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJSON(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.head_ref }}
@@ -32,7 +37,7 @@ jobs:
       run: |
         git tag -f ${{ steps.get-version.outputs.full_version }} ${{ github.head_ref }}
         git tag -f ${{ steps.get-version.outputs.major_version }} ${{ github.head_ref }}
-        
+
     - name: Push new tag
       run: |
         git push -f origin ${{ steps.get-version.outputs.full_version }}
