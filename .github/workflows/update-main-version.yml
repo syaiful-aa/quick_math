@@ -30,11 +30,11 @@ jobs:
 
     - name: Tag new target
       run: |
-        git tag -f ${{ steps.get-version.outputs.full_version }} ${{ github.event.pull_request.head.sha }}
-        git tag -f ${{ steps.get-version.outputs.major_version }} ${{ github.event.pull_request.head.sha }}
+        git tag -f v${{ steps.get-version.outputs.full_version }} ${{ github.event.pull_request.head.sha }}
+        git tag -f v${{ steps.get-version.outputs.major_version }} ${{ github.event.pull_request.head.sha }}
 
     - name: Push new tag
       run: |
-        git push -f origin ${{ steps.get-version.outputs.full_version }}
-        git push -f origin ${{ steps.get-version.outputs.major_version }}
+        git push -f origin v${{ steps.get-version.outputs.full_version }}
+        git push -f origin v${{ steps.get-version.outputs.major_version }}
 
