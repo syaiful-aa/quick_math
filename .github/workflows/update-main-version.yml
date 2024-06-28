@@ -31,9 +31,11 @@ jobs:
           git fetch origin main 
           prev_version=$(git show origin/main:pubspec.yaml | grep 'version:' | cut -d ':' -f2 | sed 's/ //' | cut -d'+' -f1)
           echo "prev_version=$prev_version" >> $GITHUB_OUTPUT
+          echo $prev_version
 
           full_version=$(cat pubspec.yaml | grep 'version' | cut -d ':' -f2 | sed 's/ //' | cut -d'+' -f1)
           echo "full_version=$full_version" >> $GITHUB_OUTPUT
+          echo $full_version
           
           major_version=$(echo "$full_version" | cut -d'.' -f1)
           echo "major_version=$major_version" >> $GITHUB_OUTPUT
@@ -43,6 +45,11 @@ jobs:
     if: needs.validate_version.outputs.prev_version != needs.validate_version.outputs.full_version
     runs-on: ubuntu-latest
     steps:
+    - name: log result
+      run: |
+        echo ${{ needs.validate_version.outputs.prev_version }}
+        echo ${{ needs.validate_version.outputs.full_version }}
+
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.merge_commit_sha }}
