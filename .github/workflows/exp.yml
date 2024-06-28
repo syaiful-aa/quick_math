@@ -13,12 +13,12 @@ jobs:
         with:
           script: |
             github.rest.git.createTag({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner: 'syaiful-aa',
+              repo: 'quick_math',
               tag: 'refs/tags/v2.5.0',
               message: 'exp',
               object: 'b0894005c70be201673dd17f699fa3a5d576241c',
-              type: commit,
+              type: 'commit',
               tagger: {
                 name: 'GitHub Action',
                 email: 'action@github.com'
