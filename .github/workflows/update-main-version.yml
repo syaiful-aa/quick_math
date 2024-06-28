@@ -1,4 +1,4 @@
-name: Update Main Version
+name: Update Version
 
 on:
   pull_request:
@@ -6,35 +6,49 @@ on:
       - closed
 
 jobs:
-  publish_tags:
+  validate_version:
     if: github.event.pull_request.merged && github.base_ref == 'main'
     runs-on: ubuntu-latest
-    steps:
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJSON(github) }}
-      run: echo "$GITHUB_CONTEXT"
+    outputs:
+      head_ref: ${{ steps.comment-branch.outputs.head_ref }}
+      prev_version: ${{ steps.get-version.outputs.prev_version }}
+      full_version: ${{ steps.get-version.outputs.full_version }}
+      major_version: ${{ steps.get-version.outputs.major_version }}
 
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Get version
+        id: get-version
+        run: |
+          git fetch origin main 
+          prev_version=$(git show main:pubspec.yaml | grep 'version:' | cut -d ':' -f2 | sed 's/ //' | cut -d'+' -f1)
+          echo "prev_version=$prev_version" >> $GITHUB_OUTPUT
+
+          full_version=$(cat pubspec.yaml | grep 'version' | cut -d ':' -f2 | sed 's/ //' | cut -d'+' -f1)
+          echo "full_version=$full_version" >> $GITHUB_OUTPUT
+          
+          major_version=$(echo "$full_version" | cut -d'.' -f1)
+          echo "major_version=$major_version" >> $GITHUB_OUTPUT
+        
+  publish_tags:
+    needs: validate_version
+    if: needs.validate_version.outputs.prev_version != needs.validate_version.outputs.full_version
+    runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Get version
-      id: get-version
-      run: |
-        full_version=$(cat pubspec.yaml | grep 'version' | cut -d ':' -f2 | sed 's/ //' | cut -d'+' -f1)
-        echo "full_version=$full_version" >> $GITHUB_OUTPUT
-        
-        major_version=$(echo "$full_version" | cut -d'.' -f1)
-        echo "major_version=$major_version" >> $GITHUB_OUTPUT
-
     - name: Tag new target
       run: |
-        git tag -f v${{ steps.get-version.outputs.full_version }} ${{ github.event.pull_request.head.sha }}
-        git tag -f v${{ steps.get-version.outputs.major_version }} ${{ github.event.pull_request.head.sha }}
+        git tag -f v${{ needs.validate_version.outputs.full_version }} ${{ github.event.pull_request.head.sha }}
+        git tag -f v${{ needs.validate_version.outputs.major_version }} ${{ github.event.pull_request.head.sha }}
 
     - name: Push new tag
       run: |
-        git push -f origin v${{ steps.get-version.outputs.full_version }}
-        git push -f origin v${{ steps.get-version.outputs.major_version }}
+        git push -f origin v${{ needs.validate_version.outputs.full_version }}
+        git push -f origin v${{ needs.validate_version.outputs.major_version }}
 
