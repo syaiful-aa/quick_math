@@ -15,7 +15,12 @@ jobs:
             github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              message: "exp",
               tag: 'refs/tags/v2.5.0',
-              object: context.sha
+              message: 'exp',
+              object: context.sha,
+              type: commit,
+              tagger: {
+                name: 'GitHub Action',
+                email: 'action@github.com'
+              }
             })
