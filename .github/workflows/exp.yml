@@ -44,8 +44,7 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           https://api.github.com/repos/syaiful-aa/quick_math/git/tags \
-          -d @- <<'EOF' 
-          {
+          -d {
             "tag":"v2.5.1",
             "message":"initial version",
             "object":"b0894005c70be201673dd17f699fa3a5d576241c",
@@ -56,4 +55,3 @@ jobs:
                 "email": "action@github.com",
               }
           }
-          EOF
