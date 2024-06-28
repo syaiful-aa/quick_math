@@ -64,5 +64,5 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_sha: 'b0894005c70be201673dd17f699fa3a5d576241c',
+          commit_sha: 'b0894005c70be201673dd17f699fa3a5d576241c'
           custom_tag: '2.5.1'
