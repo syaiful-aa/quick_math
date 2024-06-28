@@ -51,8 +51,8 @@ jobs:
 
         message="${{ github.event.pull_request.title }}"
 
-        git tag -f v${{ needs.validate_version.outputs.full_version }} -m $message
-        git tag -f v${{ needs.validate_version.outputs.major_version }} -m $message
+        git tag -f v${{ needs.validate_version.outputs.full_version }} -m $'$message'
+        git tag -f v${{ needs.validate_version.outputs.major_version }} -m $'$message'
 
     - name: Push new tag
       run: |
