@@ -15,7 +15,7 @@ jobs:
             github.rest.git.createTag({
               owner: 'syaiful-aa',
               repo: 'quick_math',
-              tag: 'refs/tags/v2.5.0',
+              tag: 'v2.5.0',
               message: 'exp',
               object: 'b0894005c70be201673dd17f699fa3a5d576241c',
               type: 'commit',
