@@ -8,6 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: log
+        run: |
+          echo $context
+
       - name: Create tag
         uses: actions/github-script@v6
         with:
@@ -17,7 +21,7 @@ jobs:
               repo: context.repo.repo,
               tag: 'refs/tags/v2.5.0',
               message: 'exp',
-              object: context.sha,
+              object: 'b089400',
               type: commit,
               tagger: {
                 name: 'GitHub Action',
