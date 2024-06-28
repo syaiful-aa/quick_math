@@ -28,7 +28,9 @@ jobs:
       - name: Get version
         id: get-version
         run: |
-          base_sha=${{ github.event.pull_request.base_sha }}
+          base_sha=${{ github.event.pull_request.base.sha }}
+          echo $base_sha
+          
           git fetch origin $base_sha 
           
           prev_version=$(git show ${base_sha}:pubspec.yaml | grep 'version:' | cut -d ':' -f2 | sed 's/ //' | cut -d'+' -f1)
