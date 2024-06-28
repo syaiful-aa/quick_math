@@ -46,14 +46,15 @@ jobs:
           https://api.github.com/repos/syaiful-aa/quick_math/git/tags \
           -d @- << 'EOF'
           {
-            "tag":"v2.5.1",
-            "message":"initial version",
-            "object":"b0894005c70be201673dd17f699fa3a5d576241c",
-            "type":"commit",
+            "tag": "v2.5.1",
+            "message": "initial version",
+            "object": "b0894005c70be201673dd17f699fa3a5d576241c",
+            "type": "commit",
             "tagger":
               {
                 "name": "GitHub Action",
                 "email": "action@github.com",
+                "date": "$(date --utc +%Y-%m-%dT%H:%M:%SZ)"
               }
           }
           EOF
