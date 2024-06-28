@@ -36,25 +36,33 @@ jobs:
       #           sha: context.sha
       #       })
 
-      - name: Create Tag
-        run: |
-          curl -L \
-          -X POST \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/syaiful-aa/quick_math/git/tags \
-          -d @- << 'EOF'
-          {
-            "tag": "v2.5.1",
-            "message": "initial version",
-            "object": "b0894005c70be201673dd17f699fa3a5d576241c",
-            "type": "commit",
-            "tagger":
-              {
-                "name": "GitHub Action",
-                "email": "action@github.com",
-                "date": "2024-06-28T14:53:35-07:00"
-              }
-          }
-          EOF
+      # - name: Create Tag
+      #   run: |
+      #     curl -L \
+      #     -X POST \
+      #     -H "Accept: application/vnd.github+json" \
+      #     -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+      #     -H "X-GitHub-Api-Version: 2022-11-28" \
+      #     https://api.github.com/repos/syaiful-aa/quick_math/git/tags \
+      #     -d @- << 'EOF'
+      #     {
+      #       "tag": "v2.5.1",
+      #       "message": "initial version",
+      #       "object": "b0894005c70be201673dd17f699fa3a5d576241c",
+      #       "type": "commit",
+      #       "tagger":
+      #         {
+      #           "name": "GitHub Action",
+      #           "email": "action@github.com",
+      #           "date": "2024-06-28T14:53:35-07:00"
+      #         }
+      #     }
+      #     EOF
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_sha: 'b0894005c70be201673dd17f699fa3a5d576241c',
+          custom_tag: '2.5.1'
