@@ -1,0 +1,41 @@
+name: Triggered by tag creation
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  CLOUDSMITH_REPOSITORY: https://dart.cloudsmith.io/agriaku-engineering/agriaku_design_system/
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # - name: setup flutter
+      #   uses: subosito/flutter-action@v2
+      #   with:
+      #     cache: true
+
+      # - name: authenticate cloudsmith
+      #   run: echo ${{ secrets.CLOUDSMITH_API_KEY }} | dart pub token add $CLOUDSMITH_REPOSITORY
+
+      # - name: adjust pubspec
+      #   uses: Agriaku/agriaku_app_actions/cloudsmith-dependencies@v1.10.0
+      #   with:
+      #     hosted_link: ${{ env.CLOUDSMITH_REPOSITORY }}
+
+      # - name: publish
+      #   run: dart pub publish --force
+
+      - name: simulate publish
+        run: |
+          git status
+          echo 
+          
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
