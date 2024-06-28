@@ -10,7 +10,7 @@ jobs:
 
       - name: log
         run: |
-          echo $context
+          echo ${{ context }}
 
       - name: Create tag
         uses: actions/github-script@v6
@@ -21,7 +21,7 @@ jobs:
               repo: context.repo.repo,
               tag: 'refs/tags/v2.5.0',
               message: 'exp',
-              object: 'b089400',
+              object: 'b0894005c70be201673dd17f699fa3a5d576241c',
               type: commit,
               tagger: {
                 name: 'GitHub Action',
