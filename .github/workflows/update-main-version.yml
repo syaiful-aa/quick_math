@@ -28,8 +28,10 @@ jobs:
       - name: Get version
         id: get-version
         run: |
-          git fetch origin main 
-          prev_version=$(git show origin/main:pubspec.yaml | grep 'version:' | cut -d ':' -f2 | sed 's/ //' | cut -d'+' -f1)
+          base_sha=${{ github.event.pull_request.base_sha }}
+          git fetch origin $base_sha 
+          
+          prev_version=$(git show ${base_sha}:pubspec.yaml | grep 'version:' | cut -d ':' -f2 | sed 's/ //' | cut -d'+' -f1)
           echo "prev_version=$prev_version" >> $GITHUB_OUTPUT
           echo $prev_version
 
