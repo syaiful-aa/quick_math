@@ -49,10 +49,8 @@ jobs:
         git config user.email "action@github.com"
         git config user.name "GitHub Action"
 
-        message="${{ github.event.pull_request.title }}"
-
-        git tag -f v${{ needs.validate_version.outputs.full_version }} -m $'$message'
-        git tag -f v${{ needs.validate_version.outputs.major_version }} -m $'$message'
+        git tag -f v${{ needs.validate_version.outputs.full_version }} -m $'${{ github.event.pull_request.title }}'
+        git tag -f v${{ needs.validate_version.outputs.major_version }} -m $'${{ github.event.pull_request.title }}'
 
     - name: Push new tag
       run: |
