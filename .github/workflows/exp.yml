@@ -8,30 +8,30 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Create tag
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.rest.git.createTag({
-      #         owner: 'syaiful-aa',
-      #         repo: 'quick_math',
-      #         tag: 'v2.5.0',
-      #         message: 'exp',
-      #         object: 'b0894005c70be201673dd17f699fa3a5d576241c',
-      #         type: 'commit',
-      #         tagger: {
-      #           name: 'GitHub Action',
-      #           email: 'action@github.com'
-      #         }
-      #       })
-
-      - name: Create Tag
+      - name: Create tag
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: 'refs/tags/v2.5.0',
-                sha: context.sha
+            github.rest.git.createTag({
+              owner: 'syaiful-aa',
+              repo: 'quick_math',
+              tag: 'v2.5.0',
+              message: 'exp',
+              object: context.sha,
+              type: 'commit',
+              tagger: {
+                name: 'GitHub Action',
+                email: 'action@github.com'
+              }
             })
+
+      # - name: Create Tag
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       github.rest.git.createRef({
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           ref: 'refs/tags/v2.5.0',
+      #           sha: context.sha
+      #       })
