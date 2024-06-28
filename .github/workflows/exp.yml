@@ -54,7 +54,7 @@ jobs:
               {
                 "name": "GitHub Action",
                 "email": "action@github.com",
-                "date": "$(date --utc +%Y-%m-%dT%H:%M:%SZ)"
+                "date": null
               }
           }
           EOF
