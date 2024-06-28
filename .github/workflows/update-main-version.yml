@@ -39,6 +39,9 @@ jobs:
     needs: validate_version
     if: needs.validate_version.outputs.prev_version != needs.validate_version.outputs.full_version
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     steps:
     - uses: actions/checkout@v3
       with:
