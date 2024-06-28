@@ -54,7 +54,7 @@ jobs:
               {
                 "name": "GitHub Action",
                 "email": "action@github.com",
-                "date": null
+                "date": "2024-06-28T14:53:35-07:00"
               }
           }
           EOF
