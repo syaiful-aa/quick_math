@@ -6,7 +6,7 @@ on:
       - closed
 
 env:
-  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+  GH_TOKEN: ${{ secrets.PAT_TOKEN }}
 
 jobs:
   validate_version:
