@@ -1,0 +1,21 @@
+name: fire
+
+on: push
+
+env:
+  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Tag new target
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+
+          git tag -f v3.0.8 -m 'fire'
+          git push -f origin v3.0.8
+
